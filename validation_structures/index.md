@@ -3,17 +3,17 @@
 
 ## Definitions
 
-Validators
+Validators -
   Functions which take an input and give us a validation result.
 
-Validation Structs
+Validation Structs -
   Objects/Structures the contain configuration required for running validation and functions for performing validation.
 
-Input Struct
-  Structures that contain validation structions/validators for a given input.
+Input Struct -
+  Structures that contain validation structures/validators for a given input.
 
 InputsFilter
-  A structure that contains key-value pair entries for "Input" fields structs.  These structures should also be where logic for running validation for a set of inputs is performed (whether validation is asynchronous or not).
+  A structure that contains key-value pair entries for "Input" field structs.  These structures should also be where logic for running validation for a set of inputs is performed (whether validation is asynchronous or not).
 
 ## Validators
 
