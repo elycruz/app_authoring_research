@@ -102,7 +102,7 @@ interface NotEmptyValidatorOptions {
 
 ### Validator Structs
 
-These are like Validators except they contain all their validation/messaging properties directly on themselves.  Additionlly, their validation/validator method(s) exist directly on themselves as well:
+These are like Validators except they contain all their validation/messaging properties directly on themselves.  Additionally, their validation/validator method(s) exist directly on themselves as well:
 
 *figure 3* - Note: the implementation below is only partially validated (and implemented) so it may require further adjustments for actual use.
 ```rust
@@ -116,7 +116,7 @@ pub type ValidationResultError = (ValidationResultEnum, ValidationMessage);
 pub type ValidationResult = Result<(), ValidationResultError>;
 
 pub trait InputConstraints<T: Clone + Debug + Display + PartialEq>: Debug {
-  fn validate(&self, x: Option<T>) -> Result<(), ValidationResultError>;
+  fn validate(&self, x: T) -> Result<(), ValidationResultError>;
 }
 
 pub enum Constraints<'a, T> {
@@ -157,16 +157,16 @@ pub struct NumberInputConstraints<'a, T> {
   pub step: Option<T>,
   pub required: bool,
   pub custom:
-    Option<Arc<&'a (dyn Fn(&NumberInputConstraints<T>, Option<T>) -> bool + Send + Sync)>>,
+    Option<Arc<&'a (dyn Fn(&NumberInputConstraints<T>, T) -> bool + Send + Sync)>>,
 
   pub range_underflow:
-    Arc<&'a (dyn Fn(&NumberInputConstraints<T>, Option<T>) -> String + Send + Sync)>,
+    Arc<&'a (dyn Fn(&NumberInputConstraints<T>, T) -> String + Send + Sync)>,
   pub range_overflow:
-    Arc<&'a (dyn Fn(&NumberInputConstraints<T>, Option<T>) -> String + Send + Sync)>,
+    Arc<&'a (dyn Fn(&NumberInputConstraints<T>, T) -> String + Send + Sync)>,
   pub value_missing:
-    Arc<&'a (dyn Fn(&NumberInputConstraints<T>, Option<T>) -> String + Send + Sync)>,
+    Arc<&'a (dyn Fn(&NumberInputConstraints<T>, T) -> String + Send + Sync)>,
   pub custom_error:
-    Arc<&'a (dyn Fn(&NumberInputConstraints<T>, Option<T>) -> String + Send + Sync)>,
+    Arc<&'a (dyn Fn(&NumberInputConstraints<T>, T) -> String + Send + Sync)>,
 }
 ```
 
