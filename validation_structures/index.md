@@ -7,21 +7,32 @@ Validators -
   Functions which take an input and give us a validation result.
 
 Validation Structs -
-  Objects/Structures the contain configuration required for running validation and functions for performing validation.
+  Structures that contain configuration, and/or functions, required for  performing validation on a given input.
 
 Input Struct -
-  Structures that contain validation structures/validators for a given input.
+  Structures that contain validation structures used to perform validation on  given inputs.
 
-InputsFilter
+Input Filters Struct - 
   A structure that contains key-value pair entries for "Input" field structs.  These structures should also be where logic for running validation for a set of inputs is performed (whether validation is asynchronous or not).
 
 ## Validators
 
 ### Caveats
 
-- These are mostly for "hybrid" Functional + Object Oriented platforms - Some programming environments contain strict rules over what can be shared across threads reliably so in those environments it can be difficult to share structs/objects across threads that may contain non thread-safe fields/values (rust is one of these) - This can limit what is possible for "usable from anywhere" structures/libraries etc.
+- These are mostly for "hybrid" Functional + Object-Oriented platforms - Some programming environments contain strict rules over what can be shared across threads reliably so in those environments it can be difficult to share structures across threads that may contain non thread-safe fields (rust is one of these languages) - This can limit what is possible for "usable from anywhere" structures, and/or, libraries.
 
-### Ideal Implementation(s)
+### Pseudo-Ideal Implementation(s)
+
+#### Generally Ideal Implementation:
+
+Implementation would contain:
+
+- Validators - functions that take an optional value and returns a tuple containing a validation state enum and an optional message (in the case of 'failed' validation, etc.).
+- Inputs - Structures that would contain validators, and/or, filters for performing input filtering/validation.
+- InputsFilters - Structure containing inputs, and general options, for performing input filtering, and/or validation, on it's set of inputs.
+
+
+#### Example (legacy) Javascript Example
 
 A Validator should (ideally) be made up of validator options, and
  a validator getter:
@@ -96,9 +107,6 @@ interface NotEmptyValidatorOptions {
 }
 
 ```
-
-
-
 
 ### Validator Structs
 
@@ -178,11 +186,11 @@ pub struct NumberInputConstraints<'a, T> {
 
 Pros: 
 
-Less structures to deal with (TextInput contains the properties required for dealing with any string type (there are 'custom*' and 'pattern' fields declared here which can be used for enforcing value types of different formats).
+Fewer structures to deal with - TextInput contains the properties required for dealing with any string type (there are 'custom*' and 'pattern' fields declared here which can be used for enforcing value types of different formats).
 
 Cons:
 
-- Object oriented like approach (fields in structs can be maleable depending on implementation) etc.
+- Object-oriented-like approach (fields in structs can be malleable depending on implementation).
 
-Quick note: notice how this is the same as if we had used a builder pattern struct, and/or validator getter, for aquiring a validator;  Validators, and/or Validator Structs, are really the same thing (with caveats only on the implementation(s)). 
+Quick note: notice how this is the same as if we had used a builder pattern struct, and/or validator getter, for acquiring a validator;  Validators, and/or Validator Structs, are really the same thing (with caveats only on their implementations). 
 
